@@ -5,6 +5,12 @@ import { isAuth } from "../utils.js"
 
 const orderRouter=express.Router()
 
+
+orderRouter.get("/orderlist",isAuth,expressAsyncHandler(async(req,res)=>{
+    const order= await Order.find({})
+    res.send(order)
+}))
+
 orderRouter.get("/mine",isAuth,expressAsyncHandler(async(req,res)=>{
     const orders=await Order.find({
         user:req.user._id
@@ -63,5 +69,10 @@ orderRouter.put("/:id/pay",isAuth,expressAsyncHandler(async(req,res)=>{
         res.status(404).send({message1:"Order not Found"})
     }
 }))
+
+
+
+
+
 
 export default orderRouter
